@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Login - Budget Manager</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.box {
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    width: 380px;
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+}
+.box h2 { margin-bottom: 8px; color: #333; font-size: 1.8em; }
+.box p { color: #666; margin-bottom: 25px; font-size: 0.9em; }
+input {
+    width: 100%;
+    padding: 13px 15px;
+    margin: 8px 0;
+    border: 1.5px solid #ddd;
+    border-radius: 10px;
+    font-size: 15px;
+    transition: border-color 0.3s;
+    box-sizing: border-box;
+}
+input:focus { outline: none; border-color: #4facfe; }
+button {
+    width: 100%;
+    padding: 13px;
+    background: linear-gradient(135deg, #4facfe, #00f2fe);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: opacity 0.3s;
+}
+button:hover { opacity: 0.9; }
+a { display: block; margin-top: 20px; color: #4facfe; text-decoration: none; font-size: 0.9em; }
+a:hover { text-decoration: underline; }
+.error { color: #e74c3c; font-size: 0.85em; margin-top: 8px; display: none; }
+</style>
+</head>
+<body>
+<div class="box">
+    <h2>🧾 Welcome Back</h2>
+    <p>Sign in to your Budget Manager</p>
+    <input type="email" id="email" placeholder="Email Address">
+    <input type="password" id="password" placeholder="Password">
+    <div class="error" id="errorMsg">Invalid email or password. Please try again.</div>
+    <button onclick="login()">Sign In</button>
+    <a href="Register.html">Don't have an account? Register</a>
+</div>
+<script>
+function login() {
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value;
+    const errorMsg = document.getElementById('errorMsg');
+
+    if (!email || !password) {
+        errorMsg.textContent = 'Please fill in all fields.';
+        errorMsg.style.display = 'block';
+        return;
+    }
+
+    const user = JSON.parse(localStorage.getItem('user'));
+
+    if (!user) {
+        errorMsg.textContent = 'No account found. Please register first.';
+        errorMsg.style.display = 'block';
+        return;
+    }
+
+    if (email === user.email && password === user.password) {
+        localStorage.setItem('loggedIn', 'true');
+        window.location.href = 'budget.html';
+    } else {
+        errorMsg.textContent = 'Invalid email or password. Please try again.';
+        errorMsg.style.display = 'block';
+    }
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Enter') login(); });
+</script>
+</body>
+</html>
