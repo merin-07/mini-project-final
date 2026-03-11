@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-MODEL = "gemini-flash-latest"
+MODEL = "models/gemini-2.5-flash"
 
 CATEGORIES = [
     "Food",
@@ -16,6 +16,7 @@ CATEGORIES = [
     "Entertainment",
     "Healthcare",
     "Savings",
+    "Rent",
     "Other"
 ]
 
