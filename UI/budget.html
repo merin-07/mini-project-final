@@ -15,7 +15,7 @@
 
         body {
             font-family: 'Segoe UI', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #203e91 0%, #e8edff 100%);
             min-height: 100vh;
             padding: 20px;
         }
@@ -23,14 +23,14 @@
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            background: white;
+            background: rgba(255, 255, 255, 0.88);
             border-radius: 20px;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
             overflow: hidden;
         }
 
         header {
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
             color: white;
             padding: 20px 30px;
             display: flex;
@@ -104,8 +104,8 @@
 
         .tab.active {
             background: white;
-            border-bottom: 2px solid #4facfe;
-            color: #4facfe;
+            border-bottom: 2px solid #1e40af;
+            color: #1e40af;
         }
 
         .tab-content {
@@ -146,17 +146,17 @@
         }
 
         .mode-card.active {
-            border-color: #4facfe;
-            background: #e3f2fd;
+            border-color: #1e40af;
+            background: #eef2ff;
         }
 
         .mode-card:hover {
-            border-color: #4facfe;
+            border-color: #1e40af;
             transform: translateY(-5px);
         }
 
         .upload-zone {
-            border: 3px dashed #4facfe;
+            border: 3px dashed #1e40af;
             border-radius: 15px;
             padding: 40px;
             text-align: center;
@@ -171,8 +171,8 @@
 
         .upload-zone:hover,
         .upload-zone.dragover {
-            background: #e3f2fd;
-            border-color: #2196f3;
+            background: #eef2ff;
+            border-color: #1e3a8a;
         }
 
         .upload-zone img {
@@ -240,7 +240,7 @@
             padding: 15px;
             border-radius: 8px;
             font-family: monospace;
-            border-left: 4px solid #4facfe;
+            border-left: 4px solid #1e40af;
         }
 
         .item-selector {
@@ -248,13 +248,13 @@
         }
 
         .item-selector select {
-            background: #4facfe;
+            background: #1e40af;
             color: white;
             font-weight: bold;
         }
 
         button {
-            background: #4facfe;
+            background: #1e40af;
             color: white;
             border: none;
             padding: 12px 24px;
@@ -266,7 +266,7 @@
         }
 
         button:hover {
-            background: #2196f3;
+            background: #1e3a8a;
             transform: translateY(-2px);
         }
 
@@ -302,7 +302,7 @@
         }
 
         .metric {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
             color: white;
             padding: 20px;
             border-radius: 15px;
@@ -350,7 +350,7 @@
         }
 
         .user {
-            background: #4facfe;
+            background: #1e40af;
             color: white;
             margin-left: 20%;
         }
@@ -445,23 +445,24 @@
 
                 <div id="manualMode" class="manual-form">
                     <div class="form-group">
-                        <label>Amount (₹)</label>
+                        <label>Amount (₹) *</label>
                         <input type="number" id="manualAmount" placeholder="250" min="0" step="0.01">
                     </div>
                     <div class="form-row">
                         <div class="form-group">
-                            <label>Vendor/Shop</label>
+                            <label>Vendor/Shop *</label>
                             <input type="text" id="manualVendor" placeholder="Local Store">
                         </div>
                         <div class="form-group">
-                            <label>Description</label>
+                            <label>Description *</label>
                             <input type="text" id="manualDesc" placeholder="Milk, Bread">
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group">
-                            <label>Item</label>
+                            <label>Item *</label>
                             <select id="manualItem">
+                                <option value="">Select Category</option>
                                 <option value="Groceries">🛒 Groceries</option>
                                 <option value="Transport">🚗 Transport</option>
                                 <option value="Dining">🍽️ Dining Out</option>
@@ -473,7 +474,7 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label>Date</label>
+                            <label>Date *</label>
                             <input type="date" id="manualDate">
                         </div>
                     </div>
@@ -636,15 +637,15 @@
                         }
 
                         let text = `<div style="margin-bottom: 15px;">
-                            <label style="display: block; margin-bottom: 5px; font-weight: bold; color: #333;">Merchant:</label>
+                            <label style="display: block; margin-bottom: 5px; font-weight: bold; color: #333;">Merchant: *</label>
                             <input type="text" id="extMerchant" value="${ex.merchant || ''}" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; font-family: inherit;">
                         </div>`;
                         text += `<div style="margin-bottom: 15px;">
-                            <label style="display: block; margin-bottom: 5px; font-weight: bold; color: #333;">Date:</label>
+                            <label style="display: block; margin-bottom: 5px; font-weight: bold; color: #333;">Date: *</label>
                             <input type="date" id="extDate" value="${exDate}" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; font-family: inherit;">
                         </div>`;
                         text += `<div style="margin-bottom: 15px;">
-                            <label style="display: block; margin-bottom: 5px; font-weight: bold; color: #333;">Total Amount (₹):</label>
+                            <label style="display: block; margin-bottom: 5px; font-weight: bold; color: #333;">Total Amount (₹): *</label>
                             <input type="number" id="extTotal" step="0.01" value="${ex.total || 0}" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; font-family: inherit;">
                         </div>`;
 
@@ -748,13 +749,16 @@
                         finalDesc = (ex && ex.items) ? ex.items.map(i => i.name).join(', ') : 'Extracted Receipt';
                     }
 
+                    if (!finalVendor) return alert('Merchant name is mandatory!');
+                    if (!finalAmount || finalAmount <= 0) return alert('Total Amount is mandatory and must be greater than 0!');
+                    if (!finalDate) return alert('Date is mandatory!');
                     if (!finalDesc) finalDesc = 'Extracted Receipt';
 
                     expense = {
                         date: finalDate,
-                        amount: finalAmount > 0 ? finalAmount : 250,
+                        amount: finalAmount,
                         item: item, // GPay mode has selected item category
-                        vendor: finalVendor || 'Unknown Merchant',
+                        vendor: finalVendor,
                         description: finalDesc.substring(0, 50),
                         type: 'gpay'
                     };
@@ -803,13 +807,23 @@
                 }
             } else {
                 const amount = parseFloat(document.getElementById('manualAmount').value);
-                if (!amount || amount <= 0) return alert('Please enter amount!');
+                const vendor = document.getElementById('manualVendor').value.trim();
+                const desc = document.getElementById('manualDesc').value.trim();
+                const item = document.getElementById('manualItem').value;
+                const date = document.getElementById('manualDate').value;
+
+                if (!amount || amount <= 0) return alert('Amount is mandatory and must be greater than 0!');
+                if (!vendor) return alert('Vendor/Shop is mandatory!');
+                if (!desc) return alert('Description is mandatory!');
+                if (!item) return alert('Please select an Item Category!');
+                if (!date) return alert('Date is mandatory!');
+
                 expense = {
-                    date: document.getElementById('manualDate').value,
+                    date: date,
                     amount: amount,
-                    item: document.getElementById('manualItem').value,
-                    vendor: document.getElementById('manualVendor').value || 'Cash',
-                    description: document.getElementById('manualDesc').value || '',
+                    item: item,
+                    vendor: vendor,
+                    description: desc,
                     type: 'manual'
                 };
                 expenses.unshift(expense);
