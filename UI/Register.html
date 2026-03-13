@@ -7,14 +7,14 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body {
     font-family: 'Segoe UI', Arial, sans-serif;
-    background: linear-gradient(135deg, #667eea, #764ba2);
+    background: linear-gradient(135deg, #203e91, #e8edff);
     height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 .box {
-    background: white;
+    background: rgba(255, 255, 255, 0.88);
     padding: 40px;
     border-radius: 20px;
     width: 380px;
@@ -33,11 +33,11 @@ input {
     transition: border-color 0.3s;
     box-sizing: border-box;
 }
-input:focus { outline: none; border-color: #4facfe; }
+input:focus { outline: none; border-color: #1e40af; }
 button {
     width: 100%;
     padding: 13px;
-    background: linear-gradient(135deg, #4facfe, #00f2fe);
+    background: linear-gradient(135deg, #1e3a8a, #1e40af);
     color: white;
     border: none;
     border-radius: 10px;
@@ -48,7 +48,7 @@ button {
     transition: opacity 0.3s;
 }
 button:hover { opacity: 0.9; }
-a { display: block; margin-top: 20px; color: #4facfe; text-decoration: none; font-size: 0.9em; }
+a { display: block; margin-top: 20px; color: #1e40af; text-decoration: none; font-size: 0.9em; }
 a:hover { text-decoration: underline; }
 .error { color: #e74c3c; font-size: 0.85em; margin-top: 8px; display: none; }
 </style>
@@ -72,7 +72,15 @@ function register() {
     const errorMsg = document.getElementById('errorMsg');
 
     if (!name || !email || !password) {
-        errorMsg.textContent = 'Please fill in all fields.';
+        errorMsg.textContent = 'All fields are mandatory. Please fill in all fields.';
+        errorMsg.style.display = 'block';
+        return;
+    }
+
+    // Email validation regex
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        errorMsg.textContent = 'Please enter a valid email address.';
         errorMsg.style.display = 'block';
         return;
     }
