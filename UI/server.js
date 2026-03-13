@@ -39,7 +39,7 @@ app.post("/chat", async (req, res) => {
     };
 
     const model = genAI.getGenerativeModel({
-      model: "gemini-flash-latest"
+      model: "models/gemini-2.5-flash"
     });
 
     const prompt = `
