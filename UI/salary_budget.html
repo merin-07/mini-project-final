@@ -7,14 +7,14 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body {
     font-family: 'Segoe UI', Arial, sans-serif;
-    background: linear-gradient(135deg, #667eea, #764ba2);
+    background: linear-gradient(135deg, #203e91, #e8edff);
     height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 .box {
-    background: white;
+    background: rgba(255, 255, 255, 0.88);
     padding: 40px;
     border-radius: 20px;
     width: 400px;
@@ -43,11 +43,11 @@ input {
     transition: border-color 0.3s;
     box-sizing: border-box;
 }
-input:focus { outline: none; border-color: #4facfe; }
+input:focus { outline: none; border-color: #1e40af; }
 button {
     width: 100%;
     padding: 13px;
-    background: linear-gradient(135deg, #4facfe, #00f2fe);
+    background: linear-gradient(135deg, #1e3a8a, #1e40af);
     color: white;
     border: none;
     border-radius: 10px;
@@ -89,7 +89,7 @@ function save() {
     const errorMsg = document.getElementById('errorMsg');
 
     if (!salary || !budget || salary <= 0 || budget <= 0) {
-        errorMsg.textContent = 'Please enter valid salary and budget amounts.';
+        errorMsg.textContent = 'Salary and Budget Limit are mandatory. Please enter valid positive amounts.';
         errorMsg.style.display = 'block';
         return;
     }
