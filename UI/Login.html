@@ -64,7 +64,7 @@ a:hover { text-decoration: underline; }
     <a href="Register.html">Don't have an account? Register</a>
 </div>
 <script>
-function login() {
+async function login() {
     const email = document.getElementById('email').value.trim();
     const password = document.getElementById('password').value;
     const errorMsg = document.getElementById('errorMsg');
@@ -75,19 +75,25 @@ function login() {
         return;
     }
 
-    const user = JSON.parse(localStorage.getItem('user'));
+    try {
+        const res = await fetch('/api/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password })
+        });
+        const data = await res.json();
 
-    if (!user) {
-        errorMsg.textContent = 'No account found. Please register first.';
-        errorMsg.style.display = 'block';
-        return;
-    }
+        if (!res.ok) {
+            errorMsg.textContent = data.error || 'Invalid email or password.';
+            errorMsg.style.display = 'block';
+            return;
+        }
 
-    if (email === user.email && password === user.password) {
         localStorage.setItem('loggedIn', 'true');
+        localStorage.setItem('user', JSON.stringify(data));
         window.location.href = 'budget.html';
-    } else {
-        errorMsg.textContent = 'Invalid email or password. Please try again.';
+    } catch (err) {
+        errorMsg.textContent = 'Server error. Please try again.';
         errorMsg.style.display = 'block';
     }
 }

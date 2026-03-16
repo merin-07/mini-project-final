@@ -1,16 +1,8 @@
 # Dependencies
 node_modules/
-venv/
-env/
-ENV/
-.venv/
 
-# Python
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
-.pytest_cache/
+# Database
+*.db
 
 # OS/IDEs
 .vscode/
@@ -18,14 +10,5 @@ __pycache__/
 .DS_Store
 Thumbs.db
 
-# Project Specific
-UI/node_modules/
-UI/chatbot/venv/
-UI/new_ocr/venv/
-new_ocr/venv/
-chatbot/venv/
-
 # Secrets
 .env
-*.pem
-*.key

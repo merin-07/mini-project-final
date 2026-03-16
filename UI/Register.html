@@ -65,7 +65,7 @@ a:hover { text-decoration: underline; }
     <a href="Login.html">Already have an account? Sign In</a>
 </div>
 <script>
-function register() {
+async function register() {
     const name = document.getElementById('name').value.trim();
     const email = document.getElementById('email').value.trim();
     const password = document.getElementById('password').value;
@@ -77,7 +77,6 @@ function register() {
         return;
     }
 
-    // Email validation regex
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
         errorMsg.textContent = 'Please enter a valid email address.';
@@ -85,10 +84,26 @@ function register() {
         return;
     }
 
-    const user = { name, email, password };
-    localStorage.setItem('user', JSON.stringify(user));
-    // Don't set loggedIn here — user must go through salary setup first
-    window.location.href = 'salary_budget.html';
+    try {
+        const res = await fetch('/api/register', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, email, password })
+        });
+        const data = await res.json();
+
+        if (!res.ok) {
+            errorMsg.textContent = data.error || 'Registration failed.';
+            errorMsg.style.display = 'block';
+            return;
+        }
+
+        localStorage.setItem('user', JSON.stringify(data));
+        window.location.href = 'salary_budget.html';
+    } catch (err) {
+        errorMsg.textContent = 'Server error. Please try again.';
+        errorMsg.style.display = 'block';
+    }
 }
 
 document.addEventListener('keydown', e => { if (e.key === 'Enter') register(); });

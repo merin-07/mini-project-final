@@ -79,11 +79,11 @@ button:hover { opacity: 0.9; }
 <script>
 // Auth guard — only accessible after registering
 const user = JSON.parse(localStorage.getItem('user'));
-if (!user) {
+if (!user || !user.id) {
     window.location.href = 'Login.html';
 }
 
-function save() {
+async function save() {
     const salary = parseFloat(document.getElementById('salary').value);
     const budget = parseFloat(document.getElementById('budget').value);
     const errorMsg = document.getElementById('errorMsg');
@@ -94,12 +94,27 @@ function save() {
         return;
     }
 
-    user.salary = salary;
-    user.budget = budget;
-    localStorage.setItem('user', JSON.stringify(user));
-    localStorage.setItem('loggedIn', 'true');
+    try {
+        const res = await fetch('/api/user', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ userId: user.id, salary, budget })
+        });
+        const data = await res.json();
 
-    window.location.href = 'budget.html';
+        if (!res.ok) {
+            errorMsg.textContent = data.error || 'Failed to save.';
+            errorMsg.style.display = 'block';
+            return;
+        }
+
+        localStorage.setItem('user', JSON.stringify(data));
+        localStorage.setItem('loggedIn', 'true');
+        window.location.href = 'budget.html';
+    } catch (err) {
+        errorMsg.textContent = 'Server error. Please try again.';
+        errorMsg.style.display = 'block';
+    }
 }
 </script>
 </body>

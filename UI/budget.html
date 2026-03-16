@@ -545,13 +545,27 @@
 
         function logout() {
             localStorage.removeItem('loggedIn');
+            localStorage.removeItem('user');
             window.location.href = 'Login.html';
         }
 
-        let expenses = JSON.parse(localStorage.getItem('expenses')) || [];
+        let expenses = [];
         let currentMode = null;
         let currentImageData = null;
         let pieChart, barChart;
+
+        // Load expenses from database on page load
+        (async function loadExpenses() {
+            if (!userData || !userData.id) return;
+            try {
+                const res = await fetch('/api/expenses/' + userData.id);
+                if (res.ok) {
+                    expenses = await res.json();
+                }
+            } catch (err) {
+                console.error('Failed to load expenses:', err);
+            }
+        })();
 
         function showTab(index) {
             document.querySelectorAll('.tab-content').forEach((tab, i) => {
@@ -714,8 +728,8 @@
             reader.readAsDataURL(file);
         }
 
-        function addExpense() {
-            let expense = {};
+        async function addExpense() {
+            let newExpenses = [];
             if (currentMode === 'gpay' || currentMode === 'bill') {
                 let item = 'Other';
                 if (currentMode === 'gpay') {
@@ -754,20 +768,18 @@
                     if (!finalDate) return alert('Date is mandatory!');
                     if (!finalDesc) finalDesc = 'Extracted Receipt';
 
-                    expense = {
+                    newExpenses.push({
                         date: finalDate,
                         amount: finalAmount,
-                        item: item, // GPay mode has selected item category
+                        item: item,
                         vendor: finalVendor,
                         description: finalDesc.substring(0, 50),
                         type: 'gpay'
-                    };
-                    expenses.unshift(expense);
+                    });
                 }
                 // For bills, save each individual item as a separate expense
                 else if (currentMode === 'bill') {
                     const itemRows = document.querySelectorAll('.extracted-item-row');
-                    let expensesAdded = 0;
 
                     if (itemRows && itemRows.length > 0) {
                         itemRows.forEach(row => {
@@ -780,7 +792,7 @@
                             const itemCategory = categoryInput ? categoryInput.value.trim() : 'Other';
 
                             if (itemName && itemPrice > 0) {
-                                expenses.unshift({
+                                newExpenses.push({
                                     date: finalDate,
                                     amount: itemPrice,
                                     item: itemCategory,
@@ -788,14 +800,13 @@
                                     description: itemName.substring(0, 50),
                                     type: 'bill'
                                 });
-                                expensesAdded++;
                             }
                         });
                     }
 
                     // Fallback if no item rows were valid but there was a total
-                    if (expensesAdded === 0 && finalAmount > 0) {
-                        expenses.unshift({
+                    if (newExpenses.length === 0 && finalAmount > 0) {
+                        newExpenses.push({
                             date: finalDate,
                             amount: finalAmount,
                             item: 'Other',
@@ -818,18 +829,34 @@
                 if (!item) return alert('Please select an Item Category!');
                 if (!date) return alert('Date is mandatory!');
 
-                expense = {
+                newExpenses.push({
                     date: date,
                     amount: amount,
                     item: item,
                     vendor: vendor,
                     description: desc,
                     type: 'manual'
-                };
-                expenses.unshift(expense);
+                });
             }
 
-            localStorage.setItem('expenses', JSON.stringify(expenses));
+            if (newExpenses.length === 0) return alert('No valid expenses to add.');
+
+            // Save to database
+            try {
+                const res = await fetch('/api/expenses', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ userId: userData.id, expenses: newExpenses })
+                });
+                if (!res.ok) throw new Error('Failed to save');
+                const data = await res.json();
+                // Add new expenses to local array
+                expenses = [...(data.inserted || []), ...expenses];
+            } catch (err) {
+                console.error('Save error:', err);
+                return alert('Failed to save expenses. Please try again.');
+            }
+
             clearForm();
             alert('✅ Expense(s) added successfully!');
         }
