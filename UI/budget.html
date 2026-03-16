@@ -384,7 +384,7 @@
         <header>
             <div style="min-width: 140px;"></div>
             <div class="header-center">
-                <h1>🧾 Smart Budget Manager</h1>
+                <h1>Smart Budget Tracker</h1>
                 <p>Track expenses → Visualize spending → Get insights</p>
             </div>
             <div class="header-user">
@@ -405,15 +405,15 @@
                 <h2 style="text-align: center; margin-bottom: 30px;">Add New Expense</h2>
                 <div class="input-mode" style="grid-template-columns: 1fr 1fr 1fr;">
                     <div class="mode-card" id="modeCardGpay" onclick="selectMode('gpay')">
-                        <h3>📱 GPay Upload</h3>
+                        <h3>GPay ScreenshotUpload</h3>
                         <p>Upload screenshot → Auto-extract → Choose category</p>
                     </div>
                     <div class="mode-card" id="modeCardBill" onclick="selectMode('bill')">
-                        <h3>🧾 Bill Upload</h3>
+                        <h3>Bill Upload</h3>
                         <p>Upload document → Auto-extract items</p>
                     </div>
                     <div class="mode-card" id="modeCardManual" onclick="selectMode('manual')">
-                        <h3>💵 Manual Cash</h3>
+                        <h3>Manual Cash</h3>
                         <p>Quick cash expense entry</p>
                     </div>
                 </div>
@@ -424,7 +424,7 @@
                         <input type="file" id="fileInput" accept="image/*" style="display:none;">
                     </div>
                     <div id="extractedSection" class="extracted-section">
-                        <h4>📄 Extracted from Image:</h4>
+                        <h4>Extracted from Image:</h4>
                         <div id="extractedText" class="extracted-text"></div>
                         <div class="item-selector" id="gpayCategorySelector">
                             <label>Select Category:</label>
@@ -488,14 +488,14 @@
         </div>
 
         <div id="tab1" class="tab-content">
-            <h2>📊 Spending Visualizations</h2>
+            <h2>Spending Visualizations</h2>
             <div class="charts-container">
                 <div>
                     <h3>Pie Chart - Total Spending by Item</h3>
                     <canvas id="pieChart"></canvas>
                 </div>
                 <div>
-                    <h3>🌈 Monthly Spending Trend</h3>
+                    <h3>Monthly Spending Trend</h3>
                     <canvas id="barChart"></canvas>
                 </div>
             </div>
@@ -503,7 +503,7 @@
         </div>
 
         <div id="tab2" class="tab-content">
-            <h2>📈 Financial Analysis</h2>
+            <h2>Financial Analysis</h2>
             <div id="metrics" class="metrics"></div>
             <h3>Top Items This Month</h3>
             <table id="itemTable">
@@ -520,7 +520,7 @@
         </div>
 
         <div id="tab3" class="tab-content">
-            <h2>💬 Smart Insights Chatbot</h2>
+            <h2>Smart Insights Chatbot</h2>
             <div id="chatContainer" class="chat-container"></div>
             <div class="chat-input">
                 <input type="text" id="chatInput" placeholder="Ask about spending patterns, budgets, tips...">
@@ -858,7 +858,7 @@
             }
 
             clearForm();
-            alert('✅ Expense(s) added successfully!');
+            alert('Expense added successfully!');
         }
 
         function clearForm() {
